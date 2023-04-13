@@ -1,0 +1,10 @@
+/micro-server-template.iml
+/.idea/
+/log/
+/micro-client/target/
+/micro-commons/commons-gateway/target/
+/micro-commons/commons-log-starter/target/
+/micro-commons/commons-swagger/target/
+/micro-commons/commons-utils/target/
+/micro-manage/target/
+/micro-remote-api/target/

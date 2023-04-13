@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    # 分区配置，进行不同环境切换
+    active: ${build_env:dev}
