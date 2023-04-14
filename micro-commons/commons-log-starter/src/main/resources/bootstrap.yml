@@ -1,0 +1,19 @@
+server:
+  port: ${SERVER_PORT:8092}
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: micro-commons-log
+  cloud:
+    nacos:
+      discovery:
+        namespace: ${NAMESPACE:tilake-data-platform-xjd-dev-namespace}
+        server-addr: ${REGISTER_HOST:101.37.117.226:8848}
+      config:
+        namespace: ${NAMESPACE:tilake-data-platform-xjd-dev-namespace}
+        server-addr: ${REGISTER_HOST:101.37.117.226:8848}
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        name: micro-client-dev
+

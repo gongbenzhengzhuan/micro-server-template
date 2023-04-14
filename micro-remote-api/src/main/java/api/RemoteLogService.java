@@ -17,7 +17,7 @@ import java.util.List;
  * @Deception 日志服务
  */
 @SuppressWarnings("all")
-@FeignClient(value = "micro-manage", path = "/datasystem-manage", fallbackFactory = RemoteLogFallbackFactory.class)
+@FeignClient(url ="http://101.37.117.226:8089/",value = "micro-manage", path = "/datasystem-manage", fallbackFactory = RemoteLogFallbackFactory.class)
 public interface RemoteLogService {
 
     /**

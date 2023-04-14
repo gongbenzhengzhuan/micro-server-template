@@ -63,7 +63,7 @@ public class SearchLogAspect implements IService<SearchLogDTO> {
      * @Description 注解切入点, 增加 @SearchLog 的方法，仅作为切面调用标记
      * @Return void
      */
-    @Pointcut("@annotation(com.zyc.commons.log.annotation.SearchLog)")
+    @Pointcut("@annotation(log.annotation.SearchLog)")
     public void pointCut() {
     }
 

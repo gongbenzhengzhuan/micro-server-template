@@ -1,4 +1,4 @@
-package com.template.micro.client;
+package log;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,12 +13,10 @@ import swagger.annotation.EnableBaseSwagger2;
 //@EnableSwagger2
 @EnableBaseSwagger2
 @EnableScheduling
-@MapperScan("com.template.micro.client.mapper")
 @EnableFeignClients(basePackages = { "api"})
-public class DataSystemClientApplication {
-
+public class CommonsLogApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DataSystemClientApplication.class,args);
+        SpringApplication.run(CommonsLogApplication.class,args);
     }
 
 }

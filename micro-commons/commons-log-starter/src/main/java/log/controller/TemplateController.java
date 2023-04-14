@@ -1,4 +1,4 @@
-package com.template.micro.client.controller;
+package log.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class TemplateController {
      * @param id
      * @return
      */
-    @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词client", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词client")
+    @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词")
     @ApiOperation(value = "特征词")
     @GetMapping(value = "/getLabelFeature")
     public Result getLabelFeature(@RequestParam("id") List<Integer> id) {
