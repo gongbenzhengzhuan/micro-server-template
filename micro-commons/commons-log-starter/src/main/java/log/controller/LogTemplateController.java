@@ -1,6 +1,5 @@
-package com.template.micro.client.controller;
+package log.controller;
 
-import gateway.entity.UserInfoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import log.annotation.AuditLog;
@@ -23,8 +22,8 @@ import java.util.List;
 @Slf4j
 @Api(tags = {"[管理端-标签管理], tags = [标签管理], description = [标签管理]"})
 @RestController
-@RequestMapping("/${api-prefix}labelManage")
-public class TemplateController {
+@RequestMapping("/${api-prefix}labelManage/log/")
+public class LogTemplateController {
 
     /**
      * 查看标签
@@ -32,17 +31,10 @@ public class TemplateController {
      * @param id
      * @return
      */
-    @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词client", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词client")
+    @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词")
     @ApiOperation(value = "特征词")
     @GetMapping(value = "/getLabelFeature")
     public Result getLabelFeature(@RequestParam("id") List<Integer> id) {
-
-
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
-        userInfoDTO.setKeyNum("go222");
-        System.out.println(userInfoDTO.getKeyNum());
-        System.out.println(OperationTypeEnum.SELECT_OPERATION);
-        //        int a =1/0;
         System.out.println("success");
         return new Result().success("success");
     }

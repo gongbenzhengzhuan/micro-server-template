@@ -1,4 +1,4 @@
-package log.controller;
+package gateway.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,8 +22,8 @@ import java.util.List;
 @Slf4j
 @Api(tags = {"[管理端-标签管理], tags = [标签管理], description = [标签管理]"})
 @RestController
-@RequestMapping("/${api-prefix}labelManage")
-public class TemplateController {
+@RequestMapping("/${api-prefix}labelManage/gateway/")
+public class GatewayTemplateController {
 
     /**
      * 查看标签

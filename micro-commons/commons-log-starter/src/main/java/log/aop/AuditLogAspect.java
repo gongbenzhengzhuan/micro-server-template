@@ -89,7 +89,7 @@ public class AuditLogAspect {
         // 获取session信息
         HttpSession session = request.getSession();
         // 从session获取用户信息
-        JSONObject user = (JSONObject) session.getAttribute("user");
+        JSONObject user = JSONObject.parseObject(JSONObject.toJSONString(session.getAttribute("user")));
         if (Objects.nonNull(user) && CollectionUtil.isNotEmpty(user)) {
             String username = user.getString("username");
             String department = user.getString("department");

@@ -49,6 +49,7 @@ public class WebInterceptor implements HandlerInterceptor {
         if (!userAgent.contains("Mozilla") && userAgent.contains("Java")) {
             return true;
         }
+
         String requestId = getRequestId(request);
         MDC.put("requestId", requestId);
         String url = request.getRequestURI();
@@ -61,7 +62,8 @@ public class WebInterceptor implements HandlerInterceptor {
         Object attribute = session.getAttribute(LoginConstant.USER);
         UserInfoDTO user = null;
         if (!ObjectUtils.isEmpty(attribute)) {
-            user = JSONObject.parseObject(attribute.toString(), UserInfoDTO.class);
+            user = JSONObject.parseObject(JSONObject.toJSONString(attribute), UserInfoDTO.class);
+            System.out.println(user.getKeyNum());
         }
         log.info("session:" + JSONObject.toJSONString(session.getAttributeNames()));
 //		if(!sysProp.isGeerIsUse()|| StringUtils.isBlank(HttpServletUtils.getCookie(sysProp.getGeerUserKey(), request.getCookies())))
@@ -90,7 +92,7 @@ public class WebInterceptor implements HandlerInterceptor {
                     UserInfoDTO userRoleInfoDTO = new UserInfoDTO();
                     userRoleInfoDTO.setGeerUserId("122");
                     userRoleInfoDTO.setIp("123");
-                    userRoleInfoDTO.setKeyNum("342");
+                    userRoleInfoDTO.setKeyNum("Gol123456");
 
                     if (ObjectUtils.isEmpty(userRoleInfoDTO)) {
                         throw new IllegalArgumentException("未找到此key对应的用户信息!");
