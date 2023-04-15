@@ -1,10 +1,13 @@
 package com.template.micro.client.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.template.micro.client.entity.SystemLog;
 import com.template.micro.client.mapper.SystemLogMapper;
 import com.template.micro.client.service.ISystemLogService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog> implements ISystemLogService {
+    @Autowired
+    SystemLogMapper systemLogMapper;
 
+    @Override
+    public List<SystemLog> getSystemLog(List<Integer> ids) {
+        return systemLogMapper.getSystemLog(ids);
+    }
 }

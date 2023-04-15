@@ -1,5 +1,7 @@
 package com.template.micro.client.controller;
 
+import com.template.micro.client.entity.SystemLog;
+import com.template.micro.client.service.ISystemLogService;
 import gateway.entity.UserInfoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -7,6 +9,7 @@ import log.annotation.AuditLog;
 import log.enumeration.OperationTypeEnum;
 import log.enumeration.SubSystemEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/${api-prefix}labelManage")
 public class TemplateController {
+    @Autowired
+    ISystemLogService iSystemLogService;
 
     /**
      * 查看标签
@@ -35,8 +40,7 @@ public class TemplateController {
     @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词client", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词client")
     @ApiOperation(value = "特征词")
     @GetMapping(value = "/getLabelFeature")
-    public Result getLabelFeature(@RequestParam("id") List<Integer> id) {
-
+    public Result<List<SystemLog>> getLabelFeature(@RequestParam("id") List<Integer> id) {
 
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setKeyNum("go222");
@@ -44,6 +48,6 @@ public class TemplateController {
         System.out.println(OperationTypeEnum.SELECT_OPERATION);
         //        int a =1/0;
         System.out.println("success");
-        return new Result().success("success");
+        return new Result<List<SystemLog>>().success(iSystemLogService.getSystemLog(id));
     }
 }

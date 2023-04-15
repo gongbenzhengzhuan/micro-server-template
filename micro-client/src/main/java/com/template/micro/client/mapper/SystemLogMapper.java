@@ -1,7 +1,10 @@
 package com.template.micro.client.mapper;
 
-import com.template.micro.client.entity.SystemLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.template.micro.client.entity.SystemLog;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 作者
  * @since 2023-04-13
  */
+@Repository
 public interface SystemLogMapper extends BaseMapper<SystemLog> {
-
+    public List<SystemLog> getSystemLog(List<Integer> ids);
 }

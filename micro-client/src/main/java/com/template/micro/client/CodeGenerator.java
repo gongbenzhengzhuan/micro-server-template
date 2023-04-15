@@ -3,13 +3,12 @@ package com.template.micro.client;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.IFill;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.fill.Column;
+
+import java.util.Collections;
 
 public class CodeGenerator {
     public static void main(String[] args) {
@@ -19,6 +18,7 @@ public class CodeGenerator {
         final String sqlPass = "123456";
         final String packageName = "com.template.micro.client";
         final String outPut = "/micro-client/src/main/java";
+        final String mapperOutPut = "/micro-client/src/main/resources/mapper";
         final String tables = "system_log";//"表
 
         // 数据源配置
@@ -52,7 +52,7 @@ public class CodeGenerator {
         packageConfigBuilder.serviceImpl("service.impl");
         //packageConfigBuilder.serviceImpl("serviceImpl");
         packageConfigBuilder.controller("controller");
-
+        packageConfigBuilder.pathInfo(Collections.singletonMap(OutputFile.mapperXml, projectPath + mapperOutPut));
         //生成dto时候放开
 //        packageConfigBuilder.other("dto");
 //        InjectionConfig.Builder injectionConfigBuilder = new InjectionConfig.Builder();
