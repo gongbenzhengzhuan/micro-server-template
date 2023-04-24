@@ -37,7 +37,7 @@ public class TemplateController {
      * @param id
      * @return
      */
-    @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词client", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词client")
+  //  @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词client", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词client")
     @ApiOperation(value = "特征词")
     @GetMapping(value = "/getLabelFeature")
     public Result<List<SystemLog>> getLabelFeature(@RequestParam("id") List<Integer> id) {
