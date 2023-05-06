@@ -3,24 +3,23 @@ package com.template.micro.client.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.template.micro.client.entity.User;
 import com.template.micro.client.service.IUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@Api(tags = {"[管理端-登录], tags = [标签管理], description = [标签管理]"})
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
     private IUserService iUserService;
 
     @ApiOperation(value = "用户登录")
-    @GetMapping(value = "/userLogin")
+    @PostMapping(value = "/userLogin")
     public String login(HttpServletRequest request,@RequestParam("username") String username, @RequestParam("password") String password) {
         // 判断是否有这个用户
         Long num = iUserService.count(new QueryWrapper<User>().lambda().eq(User::getLogin,username));
