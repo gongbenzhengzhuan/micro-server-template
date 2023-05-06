@@ -13,13 +13,13 @@ import java.util.Collections;
 public class CodeGenerator {
     public static void main(String[] args) {
 
-        final String sqlUrl = "jdbc:mysql://101.37.117.226:3306/xjd_039_zyc_service?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8";
+        final String sqlUrl = "jdbc:mysql://101.37.117.226:3333/xjd_039_zyc_service?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8";
         final String sqlUserName = "root";
-        final String sqlPass = "123456";
+        final String sqlPass = "cba123456cba";
         final String packageName = "com.template.micro.client";
         final String outPut = "/micro-client/src/main/java";
         final String mapperOutPut = "/micro-client/src/main/resources/mapper";
-        final String tables = "system_log";//"表
+        final String tables = "user";//"表
 
         // 数据源配置
         DataSourceConfig.Builder dataSourceConfigBuilder = new DataSourceConfig

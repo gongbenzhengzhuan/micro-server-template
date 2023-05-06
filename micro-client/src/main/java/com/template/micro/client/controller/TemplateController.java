@@ -5,9 +5,7 @@ import com.template.micro.client.service.ISystemLogService;
 import gateway.entity.UserInfoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import log.annotation.AuditLog;
 import log.enumeration.OperationTypeEnum;
-import log.enumeration.SubSystemEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import utils.vo.Result;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -40,7 +40,17 @@ public class TemplateController {
   //  @AuditLog(subSystemName = SubSystemEnum.USER_SIDE_DATA_STORAGE_MANAGE_PLATFORM, moduleName = "工作台-特征词client", operationType = OperationTypeEnum.SELECT_OPERATION, operationContent = "特征词client")
     @ApiOperation(value = "特征词")
     @GetMapping(value = "/getLabelFeature")
-    public Result<List<SystemLog>> getLabelFeature(@RequestParam("id") List<Integer> id) {
+    public Result<List<SystemLog>> getLabelFeature(HttpServletRequest request,@RequestParam("id") List<Integer> id) {
+
+        HttpSession session = request.getSession();
+        String token = (String) session.getAttribute("token");
+        System.out.println("token:"+token);
+        if(token.equals("adminadmin")){
+            System.out.println("用户已经登录，可以正常访问");
+            return new Result<List<SystemLog>>().code(204);
+        }else{
+            System.out.println("用户没有登录，请重新登录");
+        }
 
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setKeyNum("go222");

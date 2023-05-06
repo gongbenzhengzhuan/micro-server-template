@@ -19,7 +19,7 @@ import java.util.Map;
  * 全局异常收集
  * @authoResult lizhongpeng 2018/10/18 17:19
  */
-@RestControllerAdvice
+//@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 

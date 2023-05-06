@@ -18,8 +18,8 @@ import java.lang.reflect.Method;
  * @Author fangxin
  * @Date 2023/1/13
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class SystemLogAspect {
 
     @Autowired
@@ -41,9 +41,9 @@ public class SystemLogAspect {
         MethodSignature signature = (MethodSignature) pjd.getSignature();
         Method method = signature.getMethod();
         ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
-        if (api.tags() != null) {
-            System.out.println(api.tags()[0] + "--" + apiOperation.value());
-        }
+//        if (api.tags() != null) {
+//            System.out.println(api.tags()[0] + "--" + apiOperation.value());
+//        }
         System.out.println("切面测试");
         return pjd.proceed();
 
