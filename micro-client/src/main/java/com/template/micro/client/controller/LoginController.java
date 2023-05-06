@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import utils.vo.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,17 +21,19 @@ public class LoginController {
 
     @ApiOperation(value = "用户登录")
     @PostMapping(value = "/userLogin")
-    public String login(HttpServletRequest request,@RequestParam("username") String username, @RequestParam("password") String password) {
+    public Result<String> login(HttpServletRequest request, @RequestBody User user) {
         // 判断是否有这个用户
-        Long num = iUserService.count(new QueryWrapper<User>().lambda().eq(User::getLogin,username));
+        Long num = iUserService.count(new QueryWrapper<User>().lambda().eq(User::getLogin,user.getLogin()));
         System.out.println(num);
         HttpSession session = request.getSession();
         if(num>0){
             // 如果存在，将用户和密码加密放到session中
-            session.setAttribute("token",username+password);//设置token,参数token是要设置的具体值
+            session.setAttribute("token",user.getLogin()+user.getPassword());//设置token,参数token是要设置的具体值
+            System.out.println("token:"+session.getAttribute("token"));
+            return new Result<String>().success("success");
+        }else{
+            return new Result<String>().code(204).failure("invalid user");
         }
-        System.out.println("token:"+session.getAttribute("token"));
-        return "success";
     }
 
     @ApiOperation(value = "访问其他接口，权限验证")
