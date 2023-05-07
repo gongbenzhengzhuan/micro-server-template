@@ -19,7 +19,7 @@ public class CodeGenerator {
         final String packageName = "com.template.micro.client";
         final String outPut = "/micro-client/src/main/java";
         final String mapperOutPut = "/micro-client/src/main/resources/mapper";
-        final String tables = "user";//"表
+        final String tables = "permission";//"表
 
         // 数据源配置
         DataSourceConfig.Builder dataSourceConfigBuilder = new DataSourceConfig

@@ -1,12 +1,11 @@
-package com.template.micro.client.entity;
-
-import java.io.Serializable;
+package com.template.micro.client.dto;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -18,9 +17,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("user")
-@ApiModel(value = "User对象", description = "")
-public class User implements Serializable {
+@ApiModel(value = "UserDTO对象", description = "")
+public class UserDTO extends PageBaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
