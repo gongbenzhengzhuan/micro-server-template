@@ -27,9 +27,11 @@ public class WebConfig implements WebMvcConfigurer {
                 , "/vendor/**"
                 , "/temp/**"
                 , "/index.html"
+                , "/login/userLogin"
 //                    ,"/auth-center/permission/getUserInfoByKeyNum/**"
 //                ,"/"
-        ).addPathPatterns("/*/**");
+        );
+                //.addPathPatterns("/*/**");
     }
 
 //    /**

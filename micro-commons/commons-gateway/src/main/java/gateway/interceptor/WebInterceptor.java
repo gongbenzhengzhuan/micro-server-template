@@ -39,98 +39,112 @@ public class WebInterceptor implements HandlerInterceptor {
     @Autowired
     private SysProp sysProp;
 
-
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        String ipAddr = request.getHeader("x-forwarded-for");
-        String userAgent = request.getHeader("user-agent");
-        log.info("------------x-forwarded-for:" + ipAddr);
-        log.info("------------user-agent:" + userAgent);
-        if (!userAgent.contains("Mozilla") && userAgent.contains("Java")) {
-            return true;
-        }
-
-        String requestId = getRequestId(request);
-        MDC.put("requestId", requestId);
-        String url = request.getRequestURI();
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o){
         HttpSession session = request.getSession();
-        log.info("url:" + url);
-        if ("/error".equals(url)) {
+        String token = (String) session.getAttribute("token");
+        System.out.println("token:"+token);
+        //token需要存到redis或数据库表中
+        if(("adminadmin").equals(token)){
+            System.out.println("用户已经登录，可以正常访问");
+            return true;
+        }else{
+            response.setStatus(204);
+            System.out.println("用户没有登录，请重新登录");
             return false;
         }
-        log.info("session.id:" + session.getId());
-        Object attribute = session.getAttribute(LoginConstant.USER);
-        UserInfoDTO user = null;
-        if (!ObjectUtils.isEmpty(attribute)) {
-            user = JSONObject.parseObject(JSONObject.toJSONString(attribute), UserInfoDTO.class);
-            System.out.println(user.getKeyNum());
-        }
-        log.info("session:" + JSONObject.toJSONString(session.getAttributeNames()));
-//		if(!sysProp.isGeerIsUse()|| StringUtils.isBlank(HttpServletUtils.getCookie(sysProp.getGeerUserKey(), request.getCookies())))
-//        if (sysProp.isGeerIsUse()) {//格尔网关
-        if (true) {//格尔网关
-            boolean refresh = false;//前端是否刷新
-            String errorMsg = null;//报错信息
-            try {
-                String keyNum;
-                if (sysProp.isGeerIsUse()) {
-                    keyNum = HttpServletUtils.getCookieAndAssert(sysProp.getGeerUserKey(), request.getCookies());
-                } else {
-                    keyNum = "Gol123456";
-                }
-                log.info("keyNum:" + keyNum);
-                Long loginTime = (Long) request.getSession().getAttribute(LoginConstant.LOGIN_TIME);
-                if (user == null || (loginTime != null && loginTime > (System.currentTimeMillis() + sysProp.getGeerLoginExpireTime()))) {
-                    //用户不存在或用户登录信息过期时 登录
-                    String ip;
-                    if (sysProp.isGeerIsUse()) {
-                        ip = new String(URLDecoder.decode(HttpServletUtils.getCookieAndAssert(sysProp.getGeerIpKey(), request.getCookies())).getBytes("ISO-8859-1"), "GBK");
-                    } else {
-                        ip = "192.168.0.1";
-                    }
-                    //获取用户信息
-                    UserInfoDTO userRoleInfoDTO = new UserInfoDTO();
-                    userRoleInfoDTO.setGeerUserId("122");
-                    userRoleInfoDTO.setIp("123");
-                    userRoleInfoDTO.setKeyNum("Gol123456");
-
-                    if (ObjectUtils.isEmpty(userRoleInfoDTO)) {
-                        throw new IllegalArgumentException("未找到此key对应的用户信息!");
-                    }
-                    JSONObject res = new JSONObject();
-                    res.put("userInfo", userRoleInfoDTO);
-                    res.put("keyNumber", keyNum);
-                    res.put("ip", ip);
-                    loginByUserDataOfZYC(res, null, session);
-                } else if (!keyNum.equals(user.getKeyNum())) {
-                    //userKey不一致 客户端切换用户 后端清除session记录 前端刷新页面
-                    session.invalidate();
-                    refresh = true;
-                } else {
-                    session.setAttribute(LoginConstant.USER, user);
-                }
-                //todo 如果ip或mac地址不同，是否需要校验？
-            } catch (Exception e) {
-                e.printStackTrace();
-                errorMsg = e.getMessage();
-            }
-            if (refresh || errorMsg != null) {
-                response.setStatus(HttpStatus.OK.value());
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType("application/json; charset=utf-8");
-                JSONObject res = new JSONObject();
-                res.put("status", 401);
-                res.put("refresh", refresh);
-                res.put("errorMsg", errorMsg);
-                PrintWriter out = response.getWriter();
-                out.write(res.toString());
-                out.flush();
-                out.close();
-                return false;
-            }
-        }
-        return true;
     }
+
+//    @Override
+//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+//        String ipAddr = request.getHeader("x-forwarded-for");
+//        String userAgent = request.getHeader("user-agent");
+//        log.info("------------x-forwarded-for:" + ipAddr);
+//        log.info("------------user-agent:" + userAgent);
+//        if (!userAgent.contains("Mozilla") && userAgent.contains("Java")) {
+//            return true;
+//        }
+//
+//        String requestId = getRequestId(request);
+//        MDC.put("requestId", requestId);
+//        String url = request.getRequestURI();
+//        HttpSession session = request.getSession();
+//        log.info("url:" + url);
+//        if ("/error".equals(url)) {
+//            return false;
+//        }
+//        log.info("session.id:" + session.getId());
+//        Object attribute = session.getAttribute(LoginConstant.USER);
+//        UserInfoDTO user = null;
+//        if (!ObjectUtils.isEmpty(attribute)) {
+//            user = JSONObject.parseObject(JSONObject.toJSONString(attribute), UserInfoDTO.class);
+//            System.out.println(user.getKeyNum());
+//        }
+//        log.info("session:" + JSONObject.toJSONString(session.getAttributeNames()));
+////		if(!sysProp.isGeerIsUse()|| StringUtils.isBlank(HttpServletUtils.getCookie(sysProp.getGeerUserKey(), request.getCookies())))
+////        if (sysProp.isGeerIsUse()) {//格尔网关
+//        if (true) {//格尔网关
+//            boolean refresh = false;//前端是否刷新
+//            String errorMsg = null;//报错信息
+//            try {
+//                String keyNum;
+//                if (sysProp.isGeerIsUse()) {
+//                    keyNum = HttpServletUtils.getCookieAndAssert(sysProp.getGeerUserKey(), request.getCookies());
+//                } else {
+//                    keyNum = "Gol123456";
+//                }
+//                log.info("keyNum:" + keyNum);
+//                Long loginTime = (Long) request.getSession().getAttribute(LoginConstant.LOGIN_TIME);
+//                if (user == null || (loginTime != null && loginTime > (System.currentTimeMillis() + sysProp.getGeerLoginExpireTime()))) {
+//                    //用户不存在或用户登录信息过期时 登录
+//                    String ip;
+//                    if (sysProp.isGeerIsUse()) {
+//                        ip = new String(URLDecoder.decode(HttpServletUtils.getCookieAndAssert(sysProp.getGeerIpKey(), request.getCookies())).getBytes("ISO-8859-1"), "GBK");
+//                    } else {
+//                        ip = "192.168.0.1";
+//                    }
+//                    //获取用户信息
+//                    UserInfoDTO userRoleInfoDTO = new UserInfoDTO();
+//                    userRoleInfoDTO.setGeerUserId("122");
+//                    userRoleInfoDTO.setIp("123");
+//                    userRoleInfoDTO.setKeyNum("Gol123456");
+//
+//                    if (ObjectUtils.isEmpty(userRoleInfoDTO)) {
+//                        throw new IllegalArgumentException("未找到此key对应的用户信息!");
+//                    }
+//                    JSONObject res = new JSONObject();
+//                    res.put("userInfo", userRoleInfoDTO);
+//                    res.put("keyNumber", keyNum);
+//                    res.put("ip", ip);
+//                    loginByUserDataOfZYC(res, null, session);
+//                } else if (!keyNum.equals(user.getKeyNum())) {
+//                    //userKey不一致 客户端切换用户 后端清除session记录 前端刷新页面
+//                    session.invalidate();
+//                    refresh = true;
+//                } else {
+//                    session.setAttribute(LoginConstant.USER, user);
+//                }
+//                //todo 如果ip或mac地址不同，是否需要校验？
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                errorMsg = e.getMessage();
+//            }
+//            if (refresh || errorMsg != null) {
+//                response.setStatus(HttpStatus.OK.value());
+//                response.setCharacterEncoding("UTF-8");
+//                response.setContentType("application/json; charset=utf-8");
+//                JSONObject res = new JSONObject();
+//                res.put("status", 401);
+//                res.put("refresh", refresh);
+//                res.put("errorMsg", errorMsg);
+//                PrintWriter out = response.getWriter();
+//                out.write(res.toString());
+//                out.flush();
+//                out.close();
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) {

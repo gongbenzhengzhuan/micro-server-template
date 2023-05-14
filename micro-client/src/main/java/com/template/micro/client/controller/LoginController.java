@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import utils.vo.Result;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -38,15 +39,17 @@ public class LoginController {
 
     @ApiOperation(value = "访问其他接口，权限验证")
     @GetMapping(value = "/home")
-    public String home(HttpServletRequest request) {
+    public String home(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         String token = (String) session.getAttribute("token");
         System.out.println("token:"+token);
-        if(token.equals("adminadmin")){
+        if(("adminadmin").equals(token)){
             System.out.println("用户已经登录，可以正常访问");
         }else{
+            response.setStatus(204);
             System.out.println("用户没有登录，请重新登录");
         }
+        System.out.println("status:"+response.getStatus());
         return "success";
     }
 }

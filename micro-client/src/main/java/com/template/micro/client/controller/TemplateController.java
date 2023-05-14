@@ -43,15 +43,15 @@ public class TemplateController {
     public Result<List<SystemLog>> getLabelFeature(HttpServletRequest request,@RequestParam("id") List<Integer> id) {
 
         //模拟认证
-        HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
-        System.out.println("token:"+token);
-        if (!"adminadmin".equals(token)) {
-            System.out.println("用户没有登录，请重新登录");
-            return new Result<List<SystemLog>>().code(204);
-        }
+//        HttpSession session = request.getSession();
+//        String token = (String) session.getAttribute("token");
+//        System.out.println("token:"+token);
+//        if (!"adminadmin".equals(token)) {
+//            System.out.println("用户没有登录，请重新登录");
+//            return new Result<List<SystemLog>>().code(204);
+//        }
 
-        System.out.println("用户已经登录，可以正常访问");
+      //  System.out.println("用户已经登录，可以正常访问");
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setKeyNum("go222");
         System.out.println(userInfoDTO.getKeyNum());
