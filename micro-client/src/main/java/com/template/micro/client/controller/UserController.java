@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.template.micro.client.dto.UserDTO;
 import com.template.micro.client.entity.User;
 import com.template.micro.client.service.IUserService;
+import com.template.micro.client.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.web.bind.annotation.*;
 import utils.vo.Result;
 
@@ -55,6 +55,13 @@ public class UserController {
        // queryWrapper.eq("login", userDTO.getLogin());
         IPage<User> page = iUserService.page(new Page<>(userDTO.getPageIndex(), userDTO.getPageSize()), queryWrapper);
         return new Result<List<User>>().success(page.getRecords()).total((int) page.getTotal());
+    }
+
+    @ApiOperation(value = "用户查询-模糊查询")
+    @PostMapping(value = "/userList")
+    public Result<List<List<UserVO>>> findUserByPage(@RequestBody UserDTO userDTO) {
+        IPage<List<UserVO>> page =iUserService.getUser(userDTO);
+        return new Result<List<List<UserVO>>>().success(page.getRecords()).total((int) page.getTotal());
     }
 
 }
