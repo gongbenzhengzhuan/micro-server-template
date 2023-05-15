@@ -43,15 +43,16 @@ public class WebInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         String token = (String) session.getAttribute("token");
         System.out.println("token:"+token);
+        return true;
         //token需要存到redis或数据库表中
-        if(("adminadmin").equals(token)){
-            System.out.println("用户已经登录，可以正常访问");
-            return true;
-        }else{
-            response.setStatus(204);
-            System.out.println("用户没有登录，请重新登录");
-            return false;
-        }
+//        if(("adminadmin").equals(token)){
+//            System.out.println("用户已经登录，可以正常访问");
+//            return true;
+//        }else{
+//            response.setStatus(204);
+//            System.out.println("用户没有登录，请重新登录");
+//            return false;
+//        }
     }
 
 //    @Override

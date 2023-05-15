@@ -35,7 +35,7 @@
     <dependency>
         <groupId>org.example</groupId>
         <artifactId>commons-gateway</artifactId>
-        <version>1.0-20230514.091901-5</version>
+        <version>1.0-20230515.014258-6</version>
     </dependency>
     </dependencies>
 
