@@ -37,6 +37,12 @@
         <artifactId>commons-gateway</artifactId>
         <version>1.0-20230515.014258-6</version>
     </dependency>
+        <!--文本算法库,不会用-->
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>1.10</version>
+    </dependency>
     </dependencies>
 
     <build>
