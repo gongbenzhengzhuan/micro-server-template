@@ -2,6 +2,8 @@ package com.template.micro.client.utils;
 
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class EditDistanceUtils {
     public String similarity(String word1, String word2){
