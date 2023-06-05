@@ -3,6 +3,7 @@ package com.template.micro.client.controller;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.template.micro.client.dto.TextDTO;
 import com.template.micro.client.utils.EditDistanceUtils;
+import com.template.micro.client.utils.WordFrequencyUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class AlgorithmController {
     //增删改查
     @Autowired
     private EditDistanceUtils editDistanceUtils;
+    @Autowired
+    private WordFrequencyUtil wordFrequencyUtil;
 
     @ApiOperation(value = "编辑距离-相似度")
     @PostMapping(value = "/editDistance")
@@ -43,8 +46,9 @@ public class AlgorithmController {
         JiebaSegmenter segmenter = new JiebaSegmenter();
         String sentences = "北京京天威科技发展有限公司大庆车务段的装车数量";
         System.out.println(segmenter.sentenceProcess(sentences));
-
-        return new Result<List<String>>().success(segmenter.sentenceProcess(content));
+        //根据出现的次数来定关键词，没有去关键词
+        System.out.println(wordFrequencyUtil.getWordFrequency(segmenter.sentenceProcess(sentences),3));
+        return new Result<List<String>>().success(wordFrequencyUtil.getWordFrequency(segmenter.sentenceProcess(sentences),3));
     }
 
 }
