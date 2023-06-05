@@ -1,5 +1,6 @@
 package com.template.micro.client.controller;
 
+import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.template.micro.client.dto.TextDTO;
 import com.template.micro.client.utils.EditDistanceUtils;
 import io.swagger.annotations.Api;
@@ -7,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import utils.vo.Result;
+
+import java.util.List;
 
 /**
  * <p>
@@ -27,7 +30,21 @@ public class AlgorithmController {
     @ApiOperation(value = "编辑距离-相似度")
     @PostMapping(value = "/editDistance")
     public Result<String> editDistance(@RequestBody TextDTO textDTO) {
+        JiebaSegmenter segmenter = new JiebaSegmenter();
+        String sentences = "北京京天威科技发展有限公司大庆车务段的装车数量";
+        System.out.println(segmenter.sentenceProcess(sentences));
+
         return new Result<String>().success(editDistanceUtils.similarity(textDTO.getContent_first(),textDTO.getContent_second()));
+    }
+
+    @ApiOperation(value = "关键词")
+    @GetMapping(value = "/getKeyword")
+    public Result<List<String>> keyword(@RequestParam("content") String content) {
+        JiebaSegmenter segmenter = new JiebaSegmenter();
+        String sentences = "北京京天威科技发展有限公司大庆车务段的装车数量";
+        System.out.println(segmenter.sentenceProcess(sentences));
+
+        return new Result<List<String>>().success(segmenter.sentenceProcess(content));
     }
 
 }
